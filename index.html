@@ -16,7 +16,8 @@
         </div>
         <h3>Guess the HEX code of the color within 10 guesses.</h3>
         <div class="what"></div>
-        <p>Hint :- Every digit of a hex code lies between 0 and F both included.</p>
+        <p>Numbers 0 to 9 are lower than the alphabets</p>
+        <p class="hint"></p>
         
         <form>
             <div class="hashcode">
@@ -29,11 +30,22 @@
                 <input type="text" id="4">
                 <input type="text" id="5">
             </div>
+
+            <div class="res">
+                <p> </p>
+                <p id="0"></p>
+                <p id="1"></p>
+                <p id="2"></p>
+                <p id="3"></p>
+                <p id="4"></p>
+                <p id="5"></p>
+            </div>
             <input type="submit">
         </form>
         
         <p class="result"></p>
+        <div class="newgame"></div>
     </main>
 </body>
-<script src="color_guesser.js"></script>
+<script src="index.js"></script>
 </html>

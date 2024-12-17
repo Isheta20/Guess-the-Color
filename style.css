@@ -5,21 +5,16 @@
     padding: 0;
 }
 
-/* .heading{
-    display: flex;
-    justify-content: space-between ;
-    align-items: center;
-} */
-
 main{
     width: 80vw;
     margin: 24px auto;
-    color: brown;
+    color: #f78c21;
 }
 .heading{
     position: relative;
 }
 h1{
+    color: orangered;
     font-size: 3rem;
     margin: 23px 0px;
 }
@@ -29,6 +24,7 @@ h1{
     position: absolute;
     top: 0;
     right: 0;
+    cursor: pointer;
 }
 
 .what{
@@ -54,18 +50,46 @@ form{
     color: orangered;
 }
 
+.hash{
+    width: 36px;
+    font-size: 1.9rem;
+}
+
 input[type=text]{
     border-radius: 12px;
     height: 40px;
     width: 36px;
-    border: solid 1px orangered;
+    border: solid 0.1rem orangered;
 }
 
 input[type=submit]{
     border-radius: 10px;
     padding: 0.4rem 0.8rem;
-    background-color: rgb(250, 212, 142);
+    background-color: rgb(255, 193, 78);
     border: solid 1px orange;
     color: rgb(116, 55, 174);
+    margin-bottom: 20px;
+}
+
+.res{
+    display: flex;
+    justify-content: center;
+    gap: 4.2rem;
+    align-items: center;
+    margin:20px 0px;
+}
+
+.res p{
+    width: 36px;
+}
+
+.newgame button{
+    border-radius: 10px;
+    padding: 0.4rem 0.8rem;
+    background-color: rgb(255, 193, 78);
+    border: solid 1px orange;
+    color: rgb(116, 55, 174);
+    margin: 20px 0;
+    cursor: pointer;
 }
 
