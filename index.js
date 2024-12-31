@@ -1,12 +1,17 @@
 window.onload = function () {
   startGame();
+  if(!localStorage.getItem('wins')){
+    localStorage.setItem('wins', '0');
+  }
+  document.querySelector(".wins").innerHTML = window.localStorage.getItem('wins');
+  document.querySelector(".livesnum").innerHTML = 10-guesses;
 };
 
 let rColor;
 function startGame() {
   rColor = randomColor();
   let x = "#"+rColor;
-  console.log(x);
+  // console.log(x);
   document.querySelector(".what").style.backgroundColor = x;
 }
 
@@ -20,6 +25,7 @@ function randomColor() {
   return color;
 }
 
+let guessedCombos = [];
 const form = document.querySelector("form");
 let guesses = 0;
 function submitHandler(e) {
@@ -44,13 +50,15 @@ function ChkColor(inputs) {
   );
   
   let i = 0;
+  let currGuess = '';
   inputs.forEach((element) => {
 
     // console.log("rColor[i]:", rColor[i], typeof rColor[i]);
     // console.log("element.value:", element.value, typeof element.value);
     
     let val = element.value.toUpperCase()
-     
+    currGuess = currGuess+val;
+
     if (rColor[i] === val) {
       para[i].innerHTML = "✔️";
     } else if (rColor[i] < val) {
@@ -60,13 +68,30 @@ function ChkColor(inputs) {
     }
     i++;
   });
-  console.log(para);
 
+  rightSection(currGuess);
   winOrNot(para, inputs);
 }
 
+function rightSection(currGuess){
+
+  guessedCombos.push('#'+currGuess);
+  console.log(currGuess);
+  console.log(guessedCombos);
+
+  let combos = document.createElement('p');
+  combos.id = guesses-1 + 'a';
+  console.log(guesses-1);
+  
+  console.log(guessedCombos[guesses-1]);
+  combos.innerHTML = guessedCombos[guesses-1];
+  document.querySelector(".guessed").appendChild(combos);
+
+  document.querySelector(".livesnum").innerHTML = 10-guesses;
+}
+
 function winOrNot(para, inputs) {
-  // let j = 0;
+
   console.log(para);
   
   for(let j=0; j<para.length; j++){
@@ -75,8 +100,6 @@ function winOrNot(para, inputs) {
     if (para[j].innerHTML != "✔️") return;
   }
 
-
-  console.log("winornot");
   
   endGame();
 }
@@ -86,6 +109,7 @@ function endGame() {
   let result = document.querySelector(".result");
   if (guesses <= 10) {
     result.innerHTML = "Congratulations! You guessed the color hex🥳";
+    scoreboard();
     //Give end result wether won or failed in the else
   } else {
     result.innerHTML = "Game Over ;-;";
@@ -128,6 +152,12 @@ function newGame(){
   document.querySelector(".result").innerHTML = "";
   document.querySelector(".hint").innerHTML = "";
 
+  for(let i=0; i<guessedCombos.length; i++){
+
+    let combo = document.getElementById(i+'a');
+    combo.remove();
+  }
+
   const btn = document.querySelector(".btn");
   btn.remove();
   startGame();
@@ -137,5 +167,28 @@ function newGame(){
 
 //HINT
 document.querySelector(".bulb").addEventListener('click', ()=>{
-  document.querySelector(".hint").innerHTML = "Hint :- Every digit of a hex code lies between 0 and F both included."
+  document.querySelector(".hint").innerHTML = "Clue:- Every digit of a hex code lies between 0 and F both included."
+  document.querySelector(".hint").style.margin = "1rem";
+  document.querySelector(".hint").style.fontSize = "large";
 })
+
+
+//Score
+
+function scoreboard(){
+
+  if(localStorage.wins){
+    let wins = Number(localStorage.getItem('wins'));
+    wins+=1;
+    localStorage.setItem('wins', wins);
+  }
+  else{
+    localStorage.setItem('wins', '1');
+  }
+  document.querySelector(".wins").innerHTML = window.localStorage.getItem('wins');
+}
+
+function resetScore() {
+  localStorage.setItem('wins', '0');
+  alert('Score reset to 0');
+}

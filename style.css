@@ -3,28 +3,33 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: beige;
 }
 
 main{
-    width: 80vw;
-    margin: 24px auto;
+    width: 98vw;
+    margin: 1px auto;
     color: #f78c21;
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: 0.5fr 1fr 0.5fr;  /* Second column is twice as wide */
+    /* gap: 20px; */
 }
 .heading{
     position: relative;
 }
 h1{
-    color: orangered;
+    color: #906a45;
     font-size: 3rem;
     margin: 23px 0px;
 }
 .bulb{
     width: 48px;
-    /* height: 65px; */
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 25px;
+    right: 15.4rem;
     cursor: pointer;
+    z-index: 1;
 }
 
 .what{
@@ -33,11 +38,11 @@ h1{
     height: 300px;
     background-color: aliceblue;
     border-radius: 20px;
-    margin: 52px auto;
+    margin: 2.5rem auto;
 }
 
 form{
-    width: 80vw;
+    /* width: 80vw; */
     margin: auto;
 }
 
@@ -60,6 +65,7 @@ input[type=text]{
     height: 40px;
     width: 36px;
     border: solid 0.1rem orangered;
+    font-size: medium;
 }
 
 input[type=submit]{
@@ -74,7 +80,7 @@ input[type=submit]{
 .res{
     display: flex;
     justify-content: center;
-    gap: 4.2rem;
+    gap: 4.3rem;
     align-items: center;
     margin:20px 0px;
 }
@@ -93,3 +99,59 @@ input[type=submit]{
     cursor: pointer;
 }
 
+
+/* left section */
+
+.left{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 0 1.3rem;
+}
+
+.score{
+    border: 0.1rem dashed #906a45;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    color: #906a45;
+    font-size: x-large;
+    width: 4rem;
+    height: 4rem;
+    align-self: end;
+    justify-self: end;
+}
+.loss{
+    justify-self: start;
+}
+.score p{
+    margin-top: 0.5rem;
+    font-size: x-large;
+    color: orangered;
+}
+
+.history{
+    grid-column: span 2;
+}
+#history{
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background-color: rgb(255, 193, 78);
+    border: solid 1px orange;
+    color: rgb(116, 55, 174);
+    margin: 40px 0;
+    cursor: pointer;  
+}
+
+
+/* RIGHT SECTION */
+.right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: x-large;
+}
+
+#heading{
+    padding: 1rem;
+}

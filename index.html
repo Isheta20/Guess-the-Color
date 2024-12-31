@@ -7,44 +7,70 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <img src="assets/hint_crop-removebg.png" alt="Hint" class="bulb">
     <main>
+        <section class="left">
+            <div class="score">
+                Wins
+                <p class="wins"></p>
+            </div>
+            <div class="score loss">
+                Losses
+                <p class="Losses"></p>
+            </div>
+            <div class="history">
+                <button id="history">Colors You Guessed</button>
+            </div>
+        </section>
 
-        <div class="heading">
-            <h1>Guess the Color</h1>    
-            <img src="assets/hint_crop.png" alt="Hint" class="bulb">
-        </div>
-        <h3>Guess the HEX code of the color within 10 guesses.</h3>
-        <div class="what"></div>
-        <p>Numbers 0 to 9 are lower than the alphabets</p>
-        <p class="hint"></p>
-        
-        <form>
-            <div class="hashcode">
-                <div class="hash">#</div>
+        <section class="center">
+            <div class="heading">
+                <h1>Guess the Color</h1>
+            </div>
+            <h3>Guess the HEX code of the color within 10 guesses.</h3>
+            <div class="what"></div>
+            <p>Numbers 0 to 9 are lower than the alphabets</p>
+            <p class="hint"></p>
+            
+            <form>
+                <div class="hashcode">
+                    <div class="hash">#</div>
+                    
+                    <input type="text" id="0">
+                    <input type="text" id="1">
+                    <input type="text" id="2">
+                    <input type="text" id="3">
+                    <input type="text" id="4">
+                    <input type="text" id="5">
+                </div>
                 
-                <input type="text" id="0">
-                <input type="text" id="1">
-                <input type="text" id="2">
-                <input type="text" id="3">
-                <input type="text" id="4">
-                <input type="text" id="5">
-            </div>
+                <div class="res">
+                    <p> </p>
+                    <p id="0"></p>
+                    <p id="1"></p>
+                    <p id="2"></p>
+                    <p id="3"></p>
+                    <p id="4"></p>
+                    <p id="5"></p>
+                </div>
+                <input type="submit">
+            </form>
+            
+            <p class="result"></p>
+            <div class="newgame"></div>
+        </section>
 
-            <div class="res">
-                <p> </p>
-                <p id="0"></p>
-                <p id="1"></p>
-                <p id="2"></p>
-                <p id="3"></p>
-                <p id="4"></p>
-                <p id="5"></p>
+        <section class="right">
+            <div class="lives">
+                Guesses Left
+                <p class="livesnum">0</p>
             </div>
-            <input type="submit">
-        </form>
-        
-        <p class="result"></p>
-        <div class="newgame"></div>
+            <div class="guessed">
+                
+                <p id="heading">Guessed</p>
+                <!-- <p class="guessedCombos">0</p> -->
+            </div>
+        </section>
     </main>
 </body>
 <script src="index.js"></script>
