@@ -12,8 +12,7 @@ main{
     color: #f78c21;
     display: grid;
     max-width: 100%;
-    grid-template-columns: 0.5fr 1fr 0.5fr;  /* Second column is twice as wide */
-    /* gap: 20px; */
+    grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 .heading{
     position: relative;
@@ -27,7 +26,7 @@ h1{
     width: 48px;
     position: absolute;
     top: 25px;
-    right: 15.4rem;
+    right: 10rem;
     cursor: pointer;
     z-index: 1;
 }
@@ -75,6 +74,7 @@ input[type=submit]{
     border: solid 1px orange;
     color: rgb(116, 55, 174);
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .res{
@@ -87,6 +87,12 @@ input[type=submit]{
 
 .res p{
     width: 36px;
+}
+
+.result{
+    font-size: x-large;
+    color: orangered;
+    margin: 0.5rem;
 }
 
 .newgame button{
@@ -110,10 +116,10 @@ input[type=submit]{
 }
 
 .score{
-    border: 0.1rem dashed #906a45;
+    border: 0.2rem dashed #b57627;
     border-radius: 0.2rem;
     padding: 1rem;
-    color: #906a45;
+    color: #b57627;
     font-size: x-large;
     width: 4rem;
     height: 4rem;
@@ -126,20 +132,27 @@ input[type=submit]{
 .score p{
     margin-top: 0.5rem;
     font-size: x-large;
-    color: orangered;
+    color: #f78c21;
 }
 
 .history{
     grid-column: span 2;
 }
+
+.history p{
+    padding: 0.2rem;
+}
+
 #history{
     border-radius: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    background-color: rgb(255, 193, 78);
-    border: solid 1px orange;
-    color: rgb(116, 55, 174);
+    padding: 0.5rem 3rem;
+    /* background-color: rgb(255, 193, 78); */
+    border: solid 0.15rem #b57627;
+    color: #f78c21;
     margin: 40px 0;
     cursor: pointer;  
+    font-size: large;
+    font-weight: 500;
 }
 
 
@@ -153,5 +166,29 @@ input[type=submit]{
 }
 
 #heading{
+    padding-bottom: 0.7rem;
+    font-size: large;
+    font-weight:600;
+}
+.livesnum{
+    padding: 0.2rem;
+}
+
+.guessed{
+    border: 0.2rem dashed #b57627;
     padding: 1rem;
+}
+.guessed p{
+    padding: 0.2rem 0;
+    font-size: medium;
+}
+
+table{
+    margin: auto;
+    width: 63%;
+    border: solid 0.15rem #b57627;
+    border-radius: 0.4rem;
+}
+th, td{
+    padding: 0.5rem 1rem;
 }
