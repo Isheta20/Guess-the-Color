@@ -241,27 +241,26 @@ document.querySelector("#history").addEventListener("click", () => {
 
   let winHistoryStr = localStorage.getItem("winHistory");
   let livesStr = localStorage.getItem("livesUsedWhenWon");
-  
+
   let winHistoryArray = winHistoryStr ? JSON.parse(winHistoryStr) : [];
   let livesArray = livesStr ? JSON.parse(livesStr) : [];
 
   if (winHistoryArray.length && livesArray.length) {
     let tableHTML = `<table>
       <tr><th>Colors</th><th>Lives Used</th></tr>`;
-  
+
     winHistoryArray.forEach((item, i) => {
-      let livesUsed = livesArray[i] ?? 'N/A';  // Use 'N/A' if livesArray is shorter
+      let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
       tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
     });
-    
+
     tableHTML += `</table>`;
-    btnHistory.innerHTML = tableHTML; 
+    btnHistory.innerHTML = tableHTML;
     btn.appendChild(btnHistory);
   } else {
     btnHistory.innerHTML = `<p>No history available.</p>`;
     btn.appendChild(btnHistory);
   }
-  
 });
 
 function resetScore() {
