@@ -128,10 +128,19 @@ function rightSection(currGuess) {
   guessedCombos.push("#" + currGuess);
 
   let combos = document.createElement("p");
-  combos.id = guesses - 1 + "a";
+  let smallDivForGuessedColor = document.createElement("div");
+  smallDivForGuessedColor.setAttribute("class", "smallDiv");
 
+  combos.id = guesses - 1 + "a";
   combos.innerHTML = guessedCombos[guesses - 1];
-  document.querySelector(".guessed").appendChild(combos);
+  combos.setAttribute("class", "combos");
+
+  //Not handled if invalid color comes
+  smallDivForGuessedColor.style.backgroundColor = combos.innerHTML;
+
+  combos.appendChild(smallDivForGuessedColor);
+
+  document.querySelector("#colorItems").appendChild(combos);
 
   document.querySelector(".livesnum").innerHTML = 9 - guesses;
 }
@@ -153,7 +162,12 @@ function endGame(finalRes) {
 
     colorsWon.push("#" + rColor);
     let string = JSON.stringify(colorsWon);
-    localStorage.setItem("winHistory", string); //updating win history
+    let historyOfColorsWon = localStorage.getItem("winHistory");
+    console.log(historyOfColorsWon);
+    historyOfColorsWon += string;
+    localStorage.setItem("winHistory", historyOfColorsWon); //updating win history
+    console.log(localStorage.getItem("winHistory"));
+    console.log(typeof localStorage.getItem("winHistory"));
 
     livesUsedWhenWon.push(guesses);
     let str = JSON.stringify(livesUsedWhenWon);
@@ -234,10 +248,13 @@ function scoreboard(outcome) {
     window.localStorage.getItem("losses");
 }
 
+let showWinHistory = true;
+let btnHistory = null;
 //WINHISTORY
 document.querySelector("#history").addEventListener("click", () => {
   let btn = document.querySelector(".history");
-  let btnHistory = document.createElement("div");
+
+  if (!btnHistory) btnHistory = document.createElement("div");
 
   let winHistoryStr = localStorage.getItem("winHistory");
   let livesStr = localStorage.getItem("livesUsedWhenWon");
@@ -245,21 +262,27 @@ document.querySelector("#history").addEventListener("click", () => {
   let winHistoryArray = winHistoryStr ? JSON.parse(winHistoryStr) : [];
   let livesArray = livesStr ? JSON.parse(livesStr) : [];
 
-  if (winHistoryArray.length && livesArray.length) {
-    let tableHTML = `<table>
-      <tr><th>Colors</th><th>Lives Used</th></tr>`;
+  if (showWinHistory) {
+    if (winHistoryArray.length && livesArray.length) {
+      let tableHTML = `<table>
+        <tr><th>Colors</th><th>Lives Used</th></tr>`;
 
-    winHistoryArray.forEach((item, i) => {
-      let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
-      tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
-    });
+      winHistoryArray.forEach((item, i) => {
+        let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
+        tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
+      });
 
-    tableHTML += `</table>`;
-    btnHistory.innerHTML = tableHTML;
-    btn.appendChild(btnHistory);
+      tableHTML += `</table>`;
+      btnHistory.innerHTML = tableHTML;
+      btn.appendChild(btnHistory);
+    } else {
+      btnHistory.innerHTML = `<p>No history available.</p>`;
+      btn.appendChild(btnHistory);
+    }
+    showWinHistory = false;
   } else {
-    btnHistory.innerHTML = `<p>No history available.</p>`;
-    btn.appendChild(btnHistory);
+    if (btn.contains(btnHistory)) btn.removeChild(btnHistory);
+    showWinHistory = true;
   }
 });
 

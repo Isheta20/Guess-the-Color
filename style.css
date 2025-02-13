@@ -213,8 +213,21 @@ input[type=submit]{
     padding: 1rem;
     background-color: white;
 }
+
+.combos{
+    display: flex;
+    gap: 1rem; 
+    justify-content: space-between;
+}
+
+.smallDiv{
+    width: 1rem;
+    height: 1rem;
+    border: 0.1rem dashed rgb(190, 189, 189);
+}
+
 .guessed p{
-    padding: 0.2rem 0;
+    padding-top: 0.5rem;
     font-size: medium;
     background-color: white;
 }
