@@ -1,3 +1,9 @@
+let guessedCombos = [];
+const form = document.querySelector("form");
+let guesses = 0;
+let colorsWon = [];
+let livesUsedWhenWon = [];
+
 window.onload = function () {
   //let's goooo
   startGame();
@@ -16,10 +22,10 @@ window.onload = function () {
 
   //winhistory
   if (!localStorage.getItem("winHistory")) {
-    localStorage.setItem("winHistory", "");
+    localStorage.setItem("winHistory", "[]");
   }
   if (!localStorage.getItem("livesUsedWhenWon")) {
-    localStorage.setItem("livesUsedWhenWon", "");
+    localStorage.setItem("livesUsedWhenWon", "[]");
   }
 
   //lives
@@ -76,12 +82,6 @@ function moveNext() {
   });
 }
 
-let guessedCombos = [];
-const form = document.querySelector("form");
-let guesses = 0;
-let colorsWon = [];
-let livesUsedWhenWon = [];
-
 function submitHandler(e) {
   e.preventDefault();
   let inputs = document.querySelectorAll('input[type="text"]');
@@ -104,9 +104,6 @@ function ChkColor(inputs) {
   let i = 0;
   let currGuess = "";
   inputs.forEach((element) => {
-    // console.log("rColor[i]:", rColor[i], typeof rColor[i]);
-    // console.log("element.value:", element.value, typeof element.value);
-
     let val = element.value.toUpperCase();
     currGuess = currGuess + val;
 
@@ -160,18 +157,22 @@ function endGame(finalRes) {
 
     scoreboard(true);
 
-    colorsWon.push("#" + rColor);
-    let string = JSON.stringify(colorsWon);
-    let historyOfColorsWon = localStorage.getItem("winHistory");
-    console.log(historyOfColorsWon);
-    historyOfColorsWon += string;
-    localStorage.setItem("winHistory", historyOfColorsWon); //updating win history
-    console.log(localStorage.getItem("winHistory"));
-    console.log(typeof localStorage.getItem("winHistory"));
+    let winHistoryArray = JSON.parse(localStorage.getItem("winHistory")) || [];
+    let livesArray = JSON.parse(localStorage.getItem("livesUsedWhenWon")) || [];
 
-    livesUsedWhenWon.push(guesses);
-    let str = JSON.stringify(livesUsedWhenWon);
-    localStorage.setItem("livesUsedWhenWon", str);
+    // if (winHistoryArray.length > 0) {
+    // Add new data to the existing history
+    winHistoryArray.push("#" + rColor);
+    livesArray.push(guesses);
+
+    // Store updated arrays back to localStorage
+    localStorage.setItem("winHistory", JSON.stringify(winHistoryArray));
+    localStorage.setItem("livesUsedWhenWon", JSON.stringify(livesArray));
+    // } else {
+    //   let colorWon = "#" + rColor;
+    //   localStorage.setItem("winHistory", colorWon);
+    //   localStorage.setItem("livesUsedWhenWon", JSON.stringify(guesses));
+    // }
   } else {
     result.innerHTML = "Game Over ;-;";
     scoreboard(false);
@@ -210,6 +211,8 @@ function newGame() {
 
   document.querySelector(".result").innerHTML = "";
   document.querySelector(".hint").innerHTML = "";
+  guesses = 0;
+  document.querySelector(".livesnum").innerHTML = 10 - guesses;
 
   for (let i = 0; i < guessedCombos.length; i++) {
     let combo = document.getElementById(i + "a");
@@ -256,11 +259,20 @@ document.querySelector("#history").addEventListener("click", () => {
 
   if (!btnHistory) btnHistory = document.createElement("div");
 
-  let winHistoryStr = localStorage.getItem("winHistory");
-  let livesStr = localStorage.getItem("livesUsedWhenWon");
+  // let winHistoryStr = localStorage.getItem("winHistory")
+  //   ? localStorage.getItem("winHistory")
+  //   : "";
+  // console.log("Win History area", typeof winHistoryStr);
+  // console.log(winHistoryStr);
 
-  let winHistoryArray = winHistoryStr ? JSON.parse(winHistoryStr) : [];
-  let livesArray = livesStr ? JSON.parse(livesStr) : [];
+  // let livesStr = localStorage.getItem("livesUsedWhenWon");
+
+  // let winHistoryArray = winHistoryStr ? JSON.parse(winHistoryStr) : "[]";
+  // let livesArray = livesStr ? JSON.parse(livesStr) : "[]";
+  // console.log("json parse for the looping: ", winHistoryArray);
+  console.log(JSON.parse(localStorage.getItem("winHistory")) || []);
+  let winHistoryArray = JSON.parse(localStorage.getItem("winHistory")) || [];
+  let livesArray = JSON.parse(localStorage.getItem("livesUsedWhenWon")) || [];
 
   if (showWinHistory) {
     if (winHistoryArray.length && livesArray.length) {
@@ -268,6 +280,8 @@ document.querySelector("#history").addEventListener("click", () => {
         <tr><th>Colors</th><th>Lives Used</th></tr>`;
 
       winHistoryArray.forEach((item, i) => {
+        console.log("Colors ", i, ": ", item);
+
         let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
         tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
       });

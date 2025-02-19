@@ -170,7 +170,7 @@ input[type=submit]{
 }
 
 #history{
-    border-radius: 0.5rem;
+    border-radius: 2rem;
     padding: 0.6rem 4rem;
     background-color: white;
     border: dashed 0.1rem rgb(190, 189, 189);
@@ -202,6 +202,7 @@ input[type=submit]{
     border: 0.1rem dashed rgb(190, 189, 189);
     padding: 0.5rem 1rem;
     margin-top: 9rem;
+    border-radius: 1.2rem;
 }
 .livesnum{
     background-color: white;
@@ -212,6 +213,7 @@ input[type=submit]{
     border: 0.1rem dashed rgb(190, 189, 189);
     padding: 1rem;
     background-color: white;
+    border-radius: 1.2rem;
 }
 
 .combos{
@@ -223,7 +225,7 @@ input[type=submit]{
 .smallDiv{
     width: 1rem;
     height: 1rem;
-    border: 0.1rem dashed rgb(190, 189, 189);
+    border-radius: 0.5rem;
 }
 
 .guessed p{
@@ -239,8 +241,15 @@ table{
     border-radius: 0.4rem;
     background-color: white;
 }
-th, td{
+th{
+    font-size:larger;
+    font-weight: 500;
+    background-color: white;
+    padding: 0.5rem 1rem;
+}
+td{
     padding: 0.5rem 1rem;
     font-weight: 500;
     background-color: white;
 }
+
