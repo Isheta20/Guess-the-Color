@@ -150,6 +150,71 @@ function winOrNot(para, inputs) {
   endGame(true);
 }
 
+//Score
+function scoreboard(outcome) {
+  if (outcome) {
+    let wins = Number(localStorage.getItem("wins"));
+    wins += 1;
+    localStorage.setItem("wins", wins);
+  } else {
+    let losses = Number(localStorage.getItem("losses"));
+    losses += 1;
+    localStorage.setItem("losses", losses);
+  }
+
+  document.querySelector(".wins").innerHTML =
+    window.localStorage.getItem("wins");
+  document.querySelector(".losses").innerHTML =
+    window.localStorage.getItem("losses");
+}
+
+//WINHISTORY
+let showWinHistory = true;
+let btnHistory = null;
+function winHistoryButtonHandler() {
+  let btn = document.querySelector(".history");
+
+  if (!btnHistory) btnHistory = document.createElement("div");
+
+  console.log(JSON.parse(localStorage.getItem("winHistory")) || []);
+  let winHistoryArray = JSON.parse(localStorage.getItem("winHistory")) || [];
+  let livesArray = JSON.parse(localStorage.getItem("livesUsedWhenWon")) || [];
+
+  if (showWinHistory) {
+    if (winHistoryArray.length && livesArray.length) {
+      let tableHTML = `<table>
+        <tr><th>Colors</th><th>Lives Used</th></tr>`;
+
+      winHistoryArray.forEach((item, i) => {
+        console.log("Colors ", i, ": ", item);
+
+        let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
+        tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
+      });
+
+      tableHTML += `</table>`;
+      btnHistory.innerHTML = tableHTML;
+      btn.appendChild(btnHistory);
+    } else {
+      btnHistory.innerHTML = `<p>No history available.</p>`;
+      btn.appendChild(btnHistory);
+    }
+    showWinHistory = false;
+  } else {
+    if (btn.contains(btnHistory)) btn.removeChild(btnHistory);
+    showWinHistory = true;
+  }
+}
+
+document
+  .querySelector("#history")
+  .addEventListener("click", winHistoryButtonHandler);
+
+function resetScore() {
+  localStorage.setItem("wins", "0");
+  alert("Score reset to 0");
+}
+
 function endGame(finalRes) {
   let result = document.querySelector(".result");
   if (finalRes) {
@@ -160,19 +225,12 @@ function endGame(finalRes) {
     let winHistoryArray = JSON.parse(localStorage.getItem("winHistory")) || [];
     let livesArray = JSON.parse(localStorage.getItem("livesUsedWhenWon")) || [];
 
-    // if (winHistoryArray.length > 0) {
-    // Add new data to the existing history
     winHistoryArray.push("#" + rColor);
     livesArray.push(guesses);
 
     // Store updated arrays back to localStorage
     localStorage.setItem("winHistory", JSON.stringify(winHistoryArray));
     localStorage.setItem("livesUsedWhenWon", JSON.stringify(livesArray));
-    // } else {
-    //   let colorWon = "#" + rColor;
-    //   localStorage.setItem("winHistory", colorWon);
-    //   localStorage.setItem("livesUsedWhenWon", JSON.stringify(guesses));
-    // }
   } else {
     result.innerHTML = "Game Over ;-;";
     scoreboard(false);
@@ -220,6 +278,9 @@ function newGame() {
   }
   guessedCombos = [];
 
+  showWinHistory = false;
+  winHistoryButtonHandler();
+
   const btn = document.querySelector(".btn");
   btn.remove();
   startGame();
@@ -232,75 +293,3 @@ document.querySelector(".bulb").addEventListener("click", () => {
   document.querySelector(".hint").style.margin = "1rem";
   document.querySelector(".hint").style.fontSize = "large";
 });
-
-//Score
-function scoreboard(outcome) {
-  if (outcome) {
-    let wins = Number(localStorage.getItem("wins"));
-    wins += 1;
-    localStorage.setItem("wins", wins);
-  } else {
-    let losses = Number(localStorage.getItem("losses"));
-    losses += 1;
-    localStorage.setItem("losses", losses);
-  }
-
-  document.querySelector(".wins").innerHTML =
-    window.localStorage.getItem("wins");
-  document.querySelector(".losses").innerHTML =
-    window.localStorage.getItem("losses");
-}
-
-let showWinHistory = true;
-let btnHistory = null;
-//WINHISTORY
-document.querySelector("#history").addEventListener("click", () => {
-  let btn = document.querySelector(".history");
-
-  if (!btnHistory) btnHistory = document.createElement("div");
-
-  // let winHistoryStr = localStorage.getItem("winHistory")
-  //   ? localStorage.getItem("winHistory")
-  //   : "";
-  // console.log("Win History area", typeof winHistoryStr);
-  // console.log(winHistoryStr);
-
-  // let livesStr = localStorage.getItem("livesUsedWhenWon");
-
-  // let winHistoryArray = winHistoryStr ? JSON.parse(winHistoryStr) : "[]";
-  // let livesArray = livesStr ? JSON.parse(livesStr) : "[]";
-  // console.log("json parse for the looping: ", winHistoryArray);
-  console.log(JSON.parse(localStorage.getItem("winHistory")) || []);
-  let winHistoryArray = JSON.parse(localStorage.getItem("winHistory")) || [];
-  let livesArray = JSON.parse(localStorage.getItem("livesUsedWhenWon")) || [];
-
-  if (showWinHistory) {
-    if (winHistoryArray.length && livesArray.length) {
-      let tableHTML = `<table>
-        <tr><th>Colors</th><th>Lives Used</th></tr>`;
-
-      winHistoryArray.forEach((item, i) => {
-        console.log("Colors ", i, ": ", item);
-
-        let livesUsed = livesArray[i] ?? "N/A"; // Use 'N/A' if livesArray is shorter
-        tableHTML += `<tr><td>${item}</td><td>${livesUsed}</td></tr>`;
-      });
-
-      tableHTML += `</table>`;
-      btnHistory.innerHTML = tableHTML;
-      btn.appendChild(btnHistory);
-    } else {
-      btnHistory.innerHTML = `<p>No history available.</p>`;
-      btn.appendChild(btnHistory);
-    }
-    showWinHistory = false;
-  } else {
-    if (btn.contains(btnHistory)) btn.removeChild(btnHistory);
-    showWinHistory = true;
-  }
-});
-
-function resetScore() {
-  localStorage.setItem("wins", "0");
-  alert("Score reset to 0");
-}
